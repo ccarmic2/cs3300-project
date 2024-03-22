@@ -1,0 +1,12 @@
+#ignore output files
+*_output_*.txt
+
+#ignore venv files
+djvenv/
+
+#ignore vscode files
+.vscode/
+
+#ignore __pycahce__
+*.pyc 
+*.pyo
