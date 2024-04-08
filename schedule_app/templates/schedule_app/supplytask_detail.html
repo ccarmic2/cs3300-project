@@ -1,0 +1,31 @@
+
+{% extends "schedule_app/base_template.html" %}
+
+{% block content %}
+<div class="card">
+    <h1>Item Name: {{supplytask}}</h1>
+    <ul>
+        <li>
+            <p>
+                <strong>Description: </strong> 
+                {% if supplytask.description %} 
+                {{supplytask.description}} 
+                {% else %} 
+                None 
+                {% endif %}
+            </p>
+        </li>
+    </ul>
+
+    <ul class="list-group list-group-horizontal">
+        <li class="list-group-item">
+            <a href="{% url 'supply-update' supplytask.id %}" class="btn btn-success">Update</a>
+        </li>
+        <li class="list-group-item">
+            <a href="{% url 'supply-delete' supplytask.id %}" class="btn btn-danger">Delete</a>
+        </li>
+
+    </ul>
+
+</div>
+{% endblock %}

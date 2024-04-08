@@ -1,23 +1,24 @@
 from django.db import models
 from django.urls import reverse
-from datetime import datetime
+from datetime import time
 
 # Create your models here.
 
 
-class CalenderDates(models.Model):
-    DEFAULT_TIME = "10:00"
+class CalendarDates(models.Model):
+    DEFAULT_TIME = time(hour=10, minute=0)
 
     booking_start = models.DateField()
     booking_end = models.DateField()
-    checkout_time = models.TimeField(DEFAULT_TIME)
-    notes = models.CharField(max_length=500, blank=True)
+    checkout_time = models.TimeField(default=DEFAULT_TIME)
+    description = models.CharField(max_length=500, blank=True)
 
     def __str__(self):
+        print(self.booking_end)
         return str(self.booking_end)
 
     def get_absolute_url(self):
-        return reverse("date_detail", args=[str(self.id)])
+        return reverse("date-detail", args=[str(self.id)])
 
 
 class SupplyTask(models.Model):
@@ -28,4 +29,4 @@ class SupplyTask(models.Model):
         return str(self.name)
 
     def get_absolute_url(self):
-        return reverse("supply_detail", args=[str(self.id)])
+        return reverse("supply-detail", args=[str(self.id)])
