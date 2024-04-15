@@ -1,32 +1,27 @@
 from django.test import TestCase
-from models import CalendarDates, SupplyTask
+from schedule_app.models import CalendarDates, SupplyTask
 
 class CalendarDatesTest(TestCase):
     @classmethod
-    def setUpTestData(cls):
-        CalendarDates.objects.create()
-        ...
-
     def setUp(self):
-        ...
+        self.dates = CalendarDates.objects.create(
+            booking_start='2024-10-05',
+            booking_end='2024-10-10'
+        )
 
-    def test_false_is_false(self):
-        ...
+    def test_description_max_length(self):
+        max_length = self.dates._meta.get_field('description').max_length
+        self.assertEqual(max_length, 500)
 
-    def test_false_is_true(self):
-        ...
+    def test_date_url(self):
+        date_url = f'/dates/{self.dates.id}'
+        self.assertEqual(self.dates.get_absolute_url(), date_url)
 
-    def test_one_plus_one_equals_two(self):
-        ...
     
 class SupplyTaskTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         SupplyTask.objects.create(name="Test Task", description="test desc")
-        ...
-
-    def setUp(self):
-        ...
 
     def test_name_max_length(self):
         task = SupplyTask.objects.get(id=1)
@@ -38,6 +33,3 @@ class SupplyTaskTests(TestCase):
         max_length = task._meta.get_field('description').max_length
         self.assertEqual(max_length, 250)
 
-    def test_one_plus_one_equals_two(self):
-        ...
-    
