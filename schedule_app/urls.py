@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from .views import (
     CalendarDatesListView,
     CalendarDatesDetailView,
@@ -11,10 +11,15 @@ from .views import (
     add_supply,
     update_supply,
     delete_supply,
+    registerPage,
+    loginPage
 )
 
 urlpatterns = [
     path("", index, name="index"),
+    path("accounts/", include('django.contrib.auth.urls')),
+    path("accounts/register", registerPage, name="register_page"),
+    path("accounts/login", loginPage, name="login"),
     path("dates/", CalendarDatesListView.as_view(), name="dates"),
     path("dates/<int:pk>", CalendarDatesDetailView.as_view(), name="date-detail"),
     path("dates/add/", add_date, name="date-add"),

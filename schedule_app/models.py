@@ -30,3 +30,13 @@ class SupplyTask(models.Model):
 
     def get_absolute_url(self):
         return reverse("supply-detail", args=[str(self.id)])
+
+#class Usersysmanager(BaseUserManager):
+#    def create_user(self, username, email, password=None, role='cleaner'):
+#       if not email:
+#            raise ValueError('User must have an email address')
+#            
+#        user = self.model(
+#            email=self.normalize_email(email)
+#
+#        )
