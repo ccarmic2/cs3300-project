@@ -2,11 +2,13 @@
 
 {% block content %}
 <ul class="list-group list-group-horizontal">
-
-    {% for date in dates %}
+    <
+    {% for day in days_in_month %}
     <li class="list-group-item">{{date}}</li>
 
     {% endfor %}
+
+    <p>{{ days_in_month }}</p>
 
 </ul>
 

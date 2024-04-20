@@ -17,6 +17,7 @@ from .views import (
 
 urlpatterns = [
     path("", index, name="index"),
+    path("<int:year>/<int:month>", index, name="index"),
     path("accounts/", include('django.contrib.auth.urls')),
     path("accounts/register", registerPage, name="register_page"),
     path("accounts/login", loginPage, name="login"),

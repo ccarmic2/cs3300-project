@@ -3,6 +3,9 @@ from django.views import generic
 from django.contrib import messages
 from django.contrib.auth.models import Group, User
 from django.contrib.auth import authenticate, login, logout 
+from datetime import datetime
+import calendar
+from calendar import HTMLCalendar
 from .models import CalendarDates, SupplyTask
 from .forms import DateForm, LoginForm, SupplyForm, CreateUserForm
 
@@ -28,9 +31,31 @@ class SupplyTaskDetailView(generic.DetailView):
     model = SupplyTask
 
 
-def index(request):
+def index(request, year=datetime.now().year, month=datetime.now().month):
     dates = CalendarDates.objects.all()
-    return render(request, "schedule_app/index.html", {'dates':dates})
+    first_day = datetime(year, month, 1).strftime("%A")
+    days_in_month = calendar.monthrange(year, month)[1]
+    days_in_month = list(range(1, days_in_month+1))
+    month_name = datetime.now().strftime("%B")
+    colored_dates = []
+    if month > 12 or month < 1:
+        month=datetime.now().month
+    
+    for num in calendar.monthrange(year, month):
+        for date in dates:
+            if num >= date.booking_start.day or num <= date.booking_end.day:
+                colored_dates.append(num)
+            
+
+    cal = HTMLCalendar().formatmonth(year, month)
+    context = {'dates': dates,
+               'first_day': first_day,
+               'days_in_month': days_in_month,
+               'month': month_name,
+               'year': year,
+               'cal': cal}
+    print(context)
+    return render(request, "schedule_app/index.html", context)
 
 
 def add_date(request):
@@ -155,5 +180,5 @@ def loginPage(request):
                 login(request, username)
                 redirect('index')
 
-    context = {}
+    context = {'form':form}
     return render(request, 'schedule_app/registration/login.html', context)
