@@ -30,29 +30,76 @@ class CalendarDatesDetailView(generic.DetailView):
 class SupplyTaskDetailView(generic.DetailView):
     model = SupplyTask
 
+def get_day_num(day):
+    days = {
+        'Sunday': 1,
+        'Monday': 2,
+        'Tuesday': 3,
+        'Wednesday': 4,
+        'Thursday': 5,
+        'Friday': 6,
+        'Saturday': 7,
+    }
+    return days[day]
+
+def get_cal(days_in_month, colored_days, first_day):
+    count = 1
+    days_in_month.reverse()
+    array_2d = [[0 for _ in range(7)] for _ in range(5)]
+    num = 1
+    for i in range(5):
+        for j in range(7):
+            if count >= first_day and days_in_month:
+                aday = days_in_month.pop()
+                if aday in colored_days:
+                    array_2d[i][j] = [aday, 1]
+                else:
+                    array_2d[i][j] = [aday, 0]
+            else:
+                count+=1
+                array_2d[i][j] = [0,0]
+
+    return array_2d
+
+def get_link_args(month, year):
+    arg_dic = {
+        'next_year': year,
+        'next_month': month + 1,
+        'prev_year': year,
+        'prev_month': month - 1
+    }
+    if month > 11:
+        arg_dic['next_year'] = year + 1 
+        arg_dic['next_month'] = 1
+    elif month < 2:
+        arg_dic['prev_year'] = year - 1 
+        arg_dic['prev_month'] = 12
+    return arg_dic
 
 def index(request, year=datetime.now().year, month=datetime.now().month):
+    tasks = SupplyTask.objects.all()
     dates = CalendarDates.objects.all()
-    first_day = datetime(year, month, 1).strftime("%A")
+    first_day = get_day_num(datetime(year, month, 1).strftime("%A"))
     days_in_month = calendar.monthrange(year, month)[1]
     days_in_month = list(range(1, days_in_month+1))
-    month_name = datetime.now().strftime("%B")
-    colored_dates = []
+    month_name = datetime(year, month, 1).strftime("%B")
+    colored_days = []
+    arg_dic = get_link_args(month, year)
     if month > 12 or month < 1:
         month=datetime.now().month
     
-    for num in calendar.monthrange(year, month):
+    for num in days_in_month:
         for date in dates:
-            if num >= date.booking_start.day or num <= date.booking_end.day:
-                colored_dates.append(num)
+            if num >= date.booking_start.day and num <= date.booking_end.day:
+                if date.booking_end.month == month or date.booking_start.month == month:
+                    colored_days.append(num)
             
-
-    cal = HTMLCalendar().formatmonth(year, month)
-    context = {'dates': dates,
-               'first_day': first_day,
-               'days_in_month': days_in_month,
+    cal = get_cal(days_in_month, colored_days, first_day)
+    context = {
+               'tasks': tasks,
                'month': month_name,
                'year': year,
+               'arg_dic':arg_dic,
                'cal': cal}
     print(context)
     return render(request, "schedule_app/index.html", context)

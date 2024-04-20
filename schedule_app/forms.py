@@ -5,11 +5,17 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
+class TimeInput(forms.TimeInput):
+    input_type = 'time'
+
 class DateForm(ModelForm):
     class Meta:
         model = CalendarDates
-        fields = '__all__'
-
+        fields = "__all__"
+        widgets = {'booking_start': DateInput(), 'booking_end': DateInput(), 'checkout_time': TimeInput()}
 
 class SupplyForm(ModelForm):
     class Meta:

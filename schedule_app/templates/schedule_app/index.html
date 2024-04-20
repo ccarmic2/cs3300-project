@@ -1,14 +1,61 @@
 {% extends "schedule_app/base_template.html" %}
 
 {% block content %}
-<ul class="list-group list-group-horizontal">
-    <
-    {% for day in days_in_month %}
-    <li class="list-group-item">{{date}}</li>
+<div class="container text-center">
+    <div class="row">
+        <div class="col">
+            <a href= "{% url 'index' arg_dic.prev_year arg_dic.prev_month %}" class="btn btn-success">Prev</a>
+        </div>
+        <div class="col">
+            <h1>{{month}} - {{year}}</h1>
+        </div>
+        <div class="col">
+            <a href= "{% url 'index' arg_dic.next_year arg_dic.next_month %}" class="btn btn-success">Next</a>
+        </div>
 
+    </div>
+
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Sunday</th>
+            <th scope="col">Monday</th>
+            <th scope="col">Tuesday</th>
+            <th scope="col">Wednesday</th>
+            <th scope="col">Thursday</th>
+            <th scope="col">Friday</th>
+            <th scope="col">Saturday</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for row in cal %}
+        <tr>
+            {% for day in row %}
+                {% if day.0 > 0 and day.1 > 0 %}
+                <td class="table-info">{{day.0}}</td>
+                {% elif day.0 > 0 and day.1 < 1 %}
+                <td class="table-secondary">{{day.0}}</td>
+                {% else %}
+                <td class="table-dark"></td>
+                {% endif %}
+            {% endfor %}
+
+        </tr>
     {% endfor %}
+    </tbody>
+</table>
 
-    <p>{{ days_in_month }}</p>
+<ul class="list-group">
+    <li class="list-group-item"><h1><strong>Supply Tasks</strong></h1></li>
+    {% for task in tasks %}
+    <li class="list-group-item">
+        <div class="ms-2 me-auto">
+            <div class="fw-bold">{{task.name}}</div>
+            {{task.description}}
+        </div>
+    </li>
+    {% endfor %}
 
 </ul>
 

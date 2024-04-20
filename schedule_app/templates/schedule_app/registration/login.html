@@ -21,6 +21,8 @@
     {% endif %}
   {% endif %}
 
+  <h1>Sign in</h1>
+
   <form method="post" action="{% url 'login' %}">
     {% csrf_token %}
     <table>
