@@ -27,6 +27,7 @@
         </li>
     </ul>
 
+    {% if request.user.is_authenticated and request.user.groups.all.0.name == 'owner_role' %}
     <ul class="list-group list-group-horizontal">
         <li class="list-group-item">
             <a href="{% url 'date-update' calendardates.id %}" class="btn btn-success">Update</a>
@@ -36,6 +37,7 @@
         </li>
 
     </ul>
+    {% endif %}
 
 </div>
 

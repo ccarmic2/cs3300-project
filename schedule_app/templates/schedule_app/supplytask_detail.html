@@ -17,6 +17,7 @@
         </li>
     </ul>
 
+    {% if request.user.is_authenticated %}
     <ul class="list-group list-group-horizontal">
         <li class="list-group-item">
             <a href="{% url 'supply-update' supplytask.id %}" class="btn btn-success">Update</a>
@@ -26,6 +27,7 @@
         </li>
 
     </ul>
+    {% endif %}
 
 </div>
 {% endblock %}

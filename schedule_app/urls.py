@@ -12,7 +12,8 @@ from .views import (
     update_supply,
     delete_supply,
     registerPage,
-    loginPage
+    loginPage,
+    logoutPage,
 )
 
 urlpatterns = [
@@ -21,6 +22,7 @@ urlpatterns = [
     path("accounts/", include('django.contrib.auth.urls')),
     path("accounts/register", registerPage, name="register_page"),
     path("accounts/login", loginPage, name="login"),
+    path("accounts/logout", logoutPage, name="logout"),
     path("dates/", CalendarDatesListView.as_view(), name="dates"),
     path("dates/<int:pk>", CalendarDatesDetailView.as_view(), name="date-detail"),
     path("dates/add/", add_date, name="date-add"),

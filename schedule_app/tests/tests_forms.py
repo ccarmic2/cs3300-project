@@ -1,5 +1,5 @@
 from django.test import TestCase
-from schedule_app.forms import DateForm, SupplyForm
+from schedule_app.forms import DateForm, SupplyForm, CreateUserForm
 from datetime import date, time
 
 class TestDateForms(TestCase):
@@ -21,3 +21,4 @@ class TestDateForms(TestCase):
         self.assertFalse(form.is_valid())
         #makes sure that there are 4 errors (one error for each blank field)
         self.assertEquals(len(form.errors), 3)
+    

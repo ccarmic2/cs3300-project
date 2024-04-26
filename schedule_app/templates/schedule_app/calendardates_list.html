@@ -3,7 +3,7 @@
 {% block content %}
 <h1>List of Dates</h1>
     {% if calendardates_list %}
-        <ul class="list-group">
+        <ul class="list-group list-group-vertical">
             {% for date in calendardates_list %}
             <li class="list-group-item">
                 <a class="btn btn-success" href="{{ date.get_absolute_url }}"> {{date}}</a>
@@ -13,7 +13,9 @@
     {% else %}
         <p>There are no saved dates</p>             
     {% endif %}
+    {% if request.user.is_authenticated and request.user.groups.all.0.name == 'owner_role' %}
     <a href="{% url 'date-add' %}" class="btn btn-primary">Add</a>
+    {% endif %}
 
 
 {% endblock %}
