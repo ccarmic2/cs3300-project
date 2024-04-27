@@ -14,7 +14,7 @@
         <p>There are no saved dates</p>             
     {% endif %}
     {% if request.user.is_authenticated and request.user.groups.all.0.name == 'owner_role' %}
-    <a href="{% url 'date-add' %}" class="btn btn-primary">Add</a>
+    <a href="{% url 'date-add' %}" class="btn btn-primary" id="add-b">Add</a>
     {% endif %}
 
 

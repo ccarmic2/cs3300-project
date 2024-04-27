@@ -17,7 +17,6 @@ def registerPage(request):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             user.set_password(password)
-            user.save()
             user.groups.add(cleaner_group)
             messages.success(request, f'Account created for {username}')
             #auth_user = User(username=username, password=password)

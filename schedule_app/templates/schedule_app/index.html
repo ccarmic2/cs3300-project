@@ -4,13 +4,13 @@
 <div class="container mx-auto p-5">
     <div class="container text-center row">
         <div class="col">
-            <a href= "{% url 'index' arg_dic.prev_year arg_dic.prev_month %}" class="btn btn-success">Prev</a>
+            <a href= "{% url 'index' arg_dic.prev_year arg_dic.prev_month %}" class="btn btn-success" id="prev-b">Prev</a>
         </div>
         <div class="col">
             <h1><strong>{{month}} - {{year}}</strong></h1>
         </div>
         <div class="col">
-            <a href= "{% url 'index' arg_dic.next_year arg_dic.next_month %}" class="btn btn-success">Next</a>
+            <a href= "{% url 'index' arg_dic.next_year arg_dic.next_month %}" class="btn btn-success" id="next-b">Next</a>
         </div>
     </div>
 

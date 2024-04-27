@@ -41,7 +41,15 @@ INSTALLED_APPS = [
     # my schedule app
     "schedule_app",
     "django_bootstrap5",
+    "django_nose"
 ]
+
+#TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+
+#NOSE_ARGS = [
+#    '--with-coverage',
+#    '--cover-package=foo,bar',
+#]
 
 # Add support for authenticating users
 AUTHENTICATION_BACKENDS = [

@@ -14,7 +14,7 @@
         <p>There are no saved supplies</p>             
     {% endif %}
     {% if request.user.is_authenticated %}
-    <a href="{% url 'supply-add' %}" class="btn btn-primary">Add</a>
+    <a href="{% url 'supply-add' %}" class="btn btn-primary" id="add-b">Add</a>
     {% endif %}
 
 
